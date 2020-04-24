@@ -52060,7 +52060,8 @@ function (_super) {
 
     _this.handleSelector = function (e) {
       _this.setState({
-        current: e.target.value
+        current: e.target.value,
+        showTotalRoute: false
       });
     };
 

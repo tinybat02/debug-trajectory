@@ -337,7 +337,7 @@ export class MainPanel extends PureComponent<Props> {
   }
 
   handleSelector = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    this.setState({ current: e.target.value });
+    this.setState({ current: e.target.value, showTotalRoute: false });
   };
 
   handleShowTotalRoute = () => {
