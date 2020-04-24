@@ -25,6 +25,7 @@ interface State {
   current: string;
   iterRoute: number;
   routeLength: number;
+  showTotalRoute: boolean;
 }
 
 export class MainPanel extends PureComponent<Props> {
@@ -36,12 +37,14 @@ export class MainPanel extends PureComponent<Props> {
   perUserVendorName: { [key: string]: string };
   perUserTime: { [key: string]: number[] };
   route: VectorLayer;
+  totalRoute: VectorLayer;
 
   state: State = {
     options: [],
     current: 'None',
     iterRoute: 0,
     routeLength: 0,
+    showTotalRoute: false,
   };
 
   componentDidMount() {
@@ -185,6 +188,7 @@ export class MainPanel extends PureComponent<Props> {
 
     if (prevState.current !== this.state.current) {
       this.route && this.map.removeLayer(this.route);
+      this.totalRoute && this.map.removeLayer(this.totalRoute);
       this.setState({ iterRoute: 0, routeLength: 0 });
       if (this.state.current !== 'None') {
         /*         const styles: { [key: string]: Style } = {
@@ -236,9 +240,13 @@ export class MainPanel extends PureComponent<Props> {
         this.setState({ routeLength: routeData.length });
 
         let routeFeature: Feature<LineString>[] = [];
+        let totalRoute: Feature[] = [];
         if (routeData.length > 1) {
           const lineFeature = createLine(routeData, timeData, 0);
           routeFeature = [lineFeature];
+          for (let i = 0; i < routeData.length - 1; i++) {
+            totalRoute.push(createLine(routeData, timeData, i));
+          }
         }
         /*         let routeFeature: Feature[] = [];
         if (routeData.length > 1) {
@@ -299,12 +307,38 @@ export class MainPanel extends PureComponent<Props> {
         });
 
         this.map.addLayer(this.route);
+
+        const totalPoints: Feature<Point>[] = [];
+        for (let i = 0; i < routeData.length; i++) {
+          totalPoints.push(createPoint(routeData, routeRadiusData, i));
+        }
+
+        this.totalRoute = new VectorLayer({
+          source: new VectorSource({
+            features: [...totalRoute, ...totalPoints],
+          }),
+          zIndex: 2,
+        });
+      }
+    }
+
+    if (prevState.showTotalRoute !== this.state.showTotalRoute) {
+      if (this.state.showTotalRoute) {
+        this.map.removeLayer(this.route);
+        this.map.addLayer(this.totalRoute);
+      } else {
+        this.map.removeLayer(this.totalRoute);
+        this.map.addLayer(this.route);
       }
     }
   }
 
   handleSelector = (e: React.ChangeEvent<HTMLSelectElement>) => {
     this.setState({ current: e.target.value });
+  };
+
+  handleShowTotalRoute = () => {
+    this.setState({ showTotalRoute: !this.state.showTotalRoute });
   };
 
   handleIterRoute = (type: string) => () => {
@@ -349,7 +383,7 @@ export class MainPanel extends PureComponent<Props> {
 
   render() {
     const { width, height } = this.props;
-    const { options, current, iterRoute, routeLength } = this.state;
+    const { options, current, iterRoute, routeLength, showTotalRoute } = this.state;
 
     return (
       <div
@@ -358,30 +392,37 @@ export class MainPanel extends PureComponent<Props> {
           height,
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 5 }}>
-          <select id="selector" onChange={this.handleSelector} value={current} style={{ width: 500 }}>
-            <option value="None">None</option>
-            {options.map(item => (
-              <option key={item} value={item}>
-                {`${item.slice(0, 8)} - ${this.perUserVendorName[item]}`}
-              </option>
-            ))}
-          </select>
+        <div className="custom-menu-bar">
+          <div>
+            <select id="selector" onChange={this.handleSelector} value={current} style={{ width: 500 }}>
+              <option value="None">None</option>
+              {options.map(item => (
+                <option key={item} value={item}>
+                  {`${item.slice(0, 8)} - ${this.perUserVendorName[item]}`}
+                </option>
+              ))}
+            </select>
+            {current !== 'None' && (
+              <>
+                <button className="custom-btn" onClick={this.handleIterRoute('previous')} disabled={showTotalRoute}>
+                  Prev
+                </button>
+                <button className="custom-btn" onClick={this.handleIterRoute('next')} disabled={showTotalRoute}>
+                  Next
+                </button>
+                <span>
+                  &nbsp;{' '}
+                  {` ${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(this.perUserTime[current][0]).toLocaleString()} -- End: ${new Date(
+                    this.perUserTime[current][this.perUserTime[current].length - 1]
+                  ).toLocaleString()}`}
+                </span>
+              </>
+            )}
+          </div>
           {current !== 'None' && (
-            <>
-              <button className="custom-btn" onClick={this.handleIterRoute('previous')}>
-                Prev
-              </button>
-              <button className="custom-btn" onClick={this.handleIterRoute('next')}>
-                Next
-              </button>
-              <span>
-                &nbsp;{' '}
-                {` ${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(this.perUserTime[current][0]).toLocaleString()} -- End: ${new Date(
-                  this.perUserTime[current][this.perUserTime[current].length - 1]
-                ).toLocaleString()}`}
-              </span>
-            </>
+            <button className="custom-btn" onClick={this.handleShowTotalRoute}>
+              {showTotalRoute ? 'Show Single' : 'Show Total'} Route
+            </button>
           )}
         </div>
         <div

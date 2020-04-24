@@ -115,7 +115,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(true);
 // Module
-exports.push([module.i, ".custom-btn {\n  padding: 0.6em 1.5em;\n  margin: 0 0.2em;\n  border-radius: 3px;\n  border: none;\n  font-weight: 400;\n  color: #ffffff;\n  background-color: #326666;\n  text-align: center; }\n\n.custom-btn:active {\n  background-color: #004040;\n  box-shadow: 0 2px #7f7f7f;\n  transform: translateY(1px); }\n", "",{"version":3,"sources":["main.css"],"names":[],"mappings":"AAAA;EACE,oBAAoB;EACpB,eAAe;EACf,kBAAkB;EAClB,YAAY;EACZ,gBAAgB;EAChB,cAAc;EACd,yBAAyB;EACzB,kBAAkB,EAAE;;AAEtB;EACE,yBAAyB;EACzB,yBAAyB;EACzB,0BAA0B,EAAE","file":"main.css","sourcesContent":[".custom-btn {\n  padding: 0.6em 1.5em;\n  margin: 0 0.2em;\n  border-radius: 3px;\n  border: none;\n  font-weight: 400;\n  color: #ffffff;\n  background-color: #326666;\n  text-align: center; }\n\n.custom-btn:active {\n  background-color: #004040;\n  box-shadow: 0 2px #7f7f7f;\n  transform: translateY(1px); }\n"]}]);
+exports.push([module.i, ".custom-btn {\n  padding: 0.6em 1.5em;\n  margin: 0 0.2em;\n  border-radius: 3px;\n  border: none;\n  font-weight: 400;\n  color: #ffffff;\n  background-color: #326666;\n  text-align: center; }\n\n.custom-btn:active {\n  background-color: #004040;\n  box-shadow: 0 2px #7f7f7f;\n  transform: translateY(1px); }\n\n.custom-menu-bar {\n  display: flex;\n  align-items: center;\n  margin-bottom: 5px;\n  justify-content: space-between; }\n", "",{"version":3,"sources":["main.css"],"names":[],"mappings":"AAAA;EACE,oBAAoB;EACpB,eAAe;EACf,kBAAkB;EAClB,YAAY;EACZ,gBAAgB;EAChB,cAAc;EACd,yBAAyB;EACzB,kBAAkB,EAAE;;AAEtB;EACE,yBAAyB;EACzB,yBAAyB;EACzB,0BAA0B,EAAE;;AAE9B;EACE,aAAa;EACb,mBAAmB;EACnB,kBAAkB;EAClB,8BAA8B,EAAE","file":"main.css","sourcesContent":[".custom-btn {\n  padding: 0.6em 1.5em;\n  margin: 0 0.2em;\n  border-radius: 3px;\n  border: none;\n  font-weight: 400;\n  color: #ffffff;\n  background-color: #326666;\n  text-align: center; }\n\n.custom-btn:active {\n  background-color: #004040;\n  box-shadow: 0 2px #7f7f7f;\n  transform: translateY(1px); }\n\n.custom-menu-bar {\n  display: flex;\n  align-items: center;\n  margin-bottom: 5px;\n  justify-content: space-between; }\n"]}]);
 // Exports
 module.exports = exports;
 
@@ -52054,12 +52054,19 @@ function (_super) {
       options: [],
       current: 'None',
       iterRoute: 0,
-      routeLength: 0
+      routeLength: 0,
+      showTotalRoute: false
     };
 
     _this.handleSelector = function (e) {
       _this.setState({
         current: e.target.value
+      });
+    };
+
+    _this.handleShowTotalRoute = function () {
+      _this.setState({
+        showTotalRoute: !_this.state.showTotalRoute
       });
     };
 
@@ -52266,6 +52273,7 @@ function (_super) {
 
     if (prevState.current !== this.state.current) {
       this.route && this.map.removeLayer(this.route);
+      this.totalRoute && this.map.removeLayer(this.totalRoute);
       this.setState({
         iterRoute: 0,
         routeLength: 0
@@ -52324,10 +52332,15 @@ function (_super) {
           routeLength: routeData.length
         });
         var routeFeature = [];
+        var totalRoute = [];
 
         if (routeData.length > 1) {
           var lineFeature = Object(_utils_helperFunc__WEBPACK_IMPORTED_MODULE_12__["createLine"])(routeData, timeData, 0);
           routeFeature = [lineFeature];
+
+          for (var i = 0; i < routeData.length - 1; i++) {
+            totalRoute.push(Object(_utils_helperFunc__WEBPACK_IMPORTED_MODULE_12__["createLine"])(routeData, timeData, i));
+          }
         }
         /*         let routeFeature: Feature[] = [];
         if (routeData.length > 1) {
@@ -52388,6 +52401,28 @@ function (_super) {
           zIndex: 2
         });
         this.map.addLayer(this.route);
+        var totalPoints = [];
+
+        for (var i = 0; i < routeData.length; i++) {
+          totalPoints.push(Object(_utils_helperFunc__WEBPACK_IMPORTED_MODULE_12__["createPoint"])(routeData, routeRadiusData, i));
+        }
+
+        this.totalRoute = new ol_layer__WEBPACK_IMPORTED_MODULE_3__["Vector"]({
+          source: new ol_source_Vector__WEBPACK_IMPORTED_MODULE_4__["default"]({
+            features: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__spread"])(totalRoute, totalPoints)
+          }),
+          zIndex: 2
+        });
+      }
+    }
+
+    if (prevState.showTotalRoute !== this.state.showTotalRoute) {
+      if (this.state.showTotalRoute) {
+        this.map.removeLayer(this.route);
+        this.map.addLayer(this.totalRoute);
+      } else {
+        this.map.removeLayer(this.totalRoute);
+        this.map.addLayer(this.route);
       }
     }
   };
@@ -52402,19 +52437,16 @@ function (_super) {
         options = _b.options,
         current = _b.current,
         iterRoute = _b.iterRoute,
-        routeLength = _b.routeLength;
+        routeLength = _b.routeLength,
+        showTotalRoute = _b.showTotalRoute;
     return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       style: {
         width: width,
         height: height
       }
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
-      style: {
-        display: 'flex',
-        alignItems: 'center',
-        marginBottom: 5
-      }
-    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("select", {
+      className: "custom-menu-bar"
+    }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("select", {
       id: "selector",
       onChange: this.handleSelector,
       value: current,
@@ -52430,11 +52462,16 @@ function (_super) {
       }, item.slice(0, 8) + " - " + _this.perUserVendorName[item]);
     })), current !== 'None' && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, null, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
       className: "custom-btn",
-      onClick: this.handleIterRoute('previous')
+      onClick: this.handleIterRoute('previous'),
+      disabled: showTotalRoute
     }, "Prev"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
       className: "custom-btn",
-      onClick: this.handleIterRoute('next')
-    }, "Next"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, "\xA0", ' ', " " + (iterRoute + 1) + " / " + (routeLength - 1) + " -- Begin: " + new Date(this.perUserTime[current][0]).toLocaleString() + " -- End: " + new Date(this.perUserTime[current][this.perUserTime[current].length - 1]).toLocaleString()))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      onClick: this.handleIterRoute('next'),
+      disabled: showTotalRoute
+    }, "Next"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, "\xA0", ' ', " " + (iterRoute + 1) + " / " + (routeLength - 1) + " -- Begin: " + new Date(this.perUserTime[current][0]).toLocaleString() + " -- End: " + new Date(this.perUserTime[current][this.perUserTime[current].length - 1]).toLocaleString()))), current !== 'None' && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+      className: "custom-btn",
+      onClick: this.handleShowTotalRoute
+    }, showTotalRoute ? 'Show Single' : 'Show Total', " Route")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       id: this.id,
       style: {
         width: width,

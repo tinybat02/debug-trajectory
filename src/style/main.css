@@ -14,3 +14,10 @@
   box-shadow: 0 2px #7f7f7f;
   transform: translateY(1px);
 }
+
+.custom-menu-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+  justify-content: space-between;
+}
