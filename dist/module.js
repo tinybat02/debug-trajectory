@@ -52419,9 +52419,11 @@ function (_super) {
     if (prevState.showTotalRoute !== this.state.showTotalRoute) {
       if (this.state.showTotalRoute) {
         this.map.removeLayer(this.route);
+        this.map.removeLayer(this.totalRoute);
         this.map.addLayer(this.totalRoute);
       } else {
         this.map.removeLayer(this.totalRoute);
+        this.map.removeLayer(this.route);
         this.map.addLayer(this.route);
       }
     }

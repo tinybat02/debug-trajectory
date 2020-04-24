@@ -189,6 +189,7 @@ export class MainPanel extends PureComponent<Props> {
     if (prevState.current !== this.state.current) {
       this.route && this.map.removeLayer(this.route);
       this.totalRoute && this.map.removeLayer(this.totalRoute);
+
       this.setState({ iterRoute: 0, routeLength: 0 });
       if (this.state.current !== 'None') {
         /*         const styles: { [key: string]: Style } = {
@@ -325,9 +326,11 @@ export class MainPanel extends PureComponent<Props> {
     if (prevState.showTotalRoute !== this.state.showTotalRoute) {
       if (this.state.showTotalRoute) {
         this.map.removeLayer(this.route);
+        this.map.removeLayer(this.totalRoute);
         this.map.addLayer(this.totalRoute);
       } else {
         this.map.removeLayer(this.totalRoute);
+        this.map.removeLayer(this.route);
         this.map.addLayer(this.route);
       }
     }
