@@ -16,6 +16,7 @@ import Select from 'ol/interaction/Select';
 import { pointerMove } from 'ol/events/condition';
 import nanoid from 'nanoid';
 import { processReceivedData, createLine, createPoint } from './utils/helperFunc';
+import ReactSearchBox from 'react-search-box';
 import 'ol/ol.css';
 import './style/main.css';
 
@@ -141,6 +142,9 @@ export class MainPanel extends PureComponent<Props> {
     if (prevProps.data.series[0] !== this.props.data.series[0]) {
       const newFields = this.props.data.series[0].fields as FieldBuffer[];
 
+      this.map.removeLayer(this.route);
+      this.map.removeLayer(this.totalRoute);
+      this.setState({ options: [], current: 'None' });
       if (newFields[1].values.buffer.length !== 0) {
         const { perUserRoute, perUserRouteRadius, perUserVendorName, perUserTime } = processReceivedData(this.props.data.series[0].length, newFields);
 
@@ -149,14 +153,14 @@ export class MainPanel extends PureComponent<Props> {
         this.perUserVendorName = perUserVendorName;
         this.perUserTime = perUserTime;
         this.setState({ options: Object.keys(this.perUserRoute) });
-      } else {
+      } /* else {
         this.map.removeLayer(this.route);
-
+        this.map.removeLayer(this.totalRoute);
         this.setState({
           options: [],
           current: 'None',
         });
-      }
+      } */
     }
 
     if (prevProps.options.tile_url !== this.props.options.tile_url) {
@@ -340,6 +344,10 @@ export class MainPanel extends PureComponent<Props> {
     this.setState({ current: e.target.value, showTotalRoute: false });
   };
 
+  handleSelectSearchbox = (record: { key: string; value: string }) => {
+    this.setState({ current: record.key });
+  };
+
   handleShowTotalRoute = () => {
     this.setState({ showTotalRoute: !this.state.showTotalRoute });
   };
@@ -395,9 +403,20 @@ export class MainPanel extends PureComponent<Props> {
           height,
         }}
       >
+        <div style={{ width: 500, marginBottom: 2 }}>
+          <ReactSearchBox
+            placeholder="Search mac_address"
+            data={options.map(mac => ({ key: mac, value: mac }))}
+            onSelect={this.handleSelectSearchbox}
+            fuseConfigs={{
+              threshold: 0.05,
+            }}
+            value={current == 'None' ? '' : current}
+          />
+        </div>
         <div className="custom-menu-bar">
           <div>
-            <select id="selector" onChange={this.handleSelector} value={current} style={{ width: 500 }}>
+            <select id="selector" onChange={this.handleSelector} value={current} style={{ width: 500, paddingLeft: 15 }}>
               <option value="None">None</option>
               {options.map(item => (
                 <option key={item} value={item}>
@@ -432,7 +451,7 @@ export class MainPanel extends PureComponent<Props> {
           id={this.id}
           style={{
             width,
-            height: height - 40,
+            height: height - 60,
           }}
         ></div>
       </div>
