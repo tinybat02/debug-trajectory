@@ -403,7 +403,7 @@ export class MainPanel extends PureComponent<Props> {
           height,
         }}
       >
-        <div style={{ width: 370, marginBottom: 2 }}>
+        <div style={{ width: 350, marginBottom: 2 }}>
           <ReactSearchBox
             placeholder="Search mac_address"
             data={options.map(mac => ({ key: mac, value: mac }))}
@@ -416,7 +416,7 @@ export class MainPanel extends PureComponent<Props> {
         </div>
         <div className="custom-menu-bar">
           <div>
-            <select id="selector" onChange={this.handleSelector} value={current} style={{ width: 370, paddingLeft: 15 }}>
+            <select id="selector" onChange={this.handleSelector} value={current} style={{ width: 350, paddingLeft: 15 }}>
               <option value="None">None</option>
               {options.map(item => (
                 <option key={item} value={item}>
@@ -435,9 +435,9 @@ export class MainPanel extends PureComponent<Props> {
                 <span>
                   &nbsp;{' '}
                   {` ${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(this.perUserTime[current][0])
-                    .toLocaleString()
+                    .toLocaleString('de-DE')
                     .replace(/\./g, '/')} -- End: ${new Date(this.perUserTime[current][this.perUserTime[current].length - 1])
-                    .toLocaleString()
+                    .toLocaleString('de-DE')
                     .replace(/\./g, '/')}`}
                 </span>
               </>

@@ -57611,7 +57611,7 @@ function (_super) {
       }
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       style: {
-        width: 370,
+        width: 350,
         marginBottom: 2
       }
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_search_box__WEBPACK_IMPORTED_MODULE_13__["default"], {
@@ -57634,7 +57634,7 @@ function (_super) {
       onChange: this.handleSelector,
       value: current,
       style: {
-        width: 370,
+        width: 350,
         paddingLeft: 15
       }
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("option", {
@@ -57652,7 +57652,7 @@ function (_super) {
       className: "custom-btn",
       onClick: this.handleIterRoute('next'),
       disabled: showTotalRoute
-    }, ">>"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, "\xA0", ' ', " " + (iterRoute + 1) + " / " + (routeLength - 1) + " -- Begin: " + new Date(this.perUserTime[current][0]).toLocaleString().replace(/\./g, '/') + " -- End: " + new Date(this.perUserTime[current][this.perUserTime[current].length - 1]).toLocaleString().replace(/\./g, '/')))), current !== 'None' && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    }, ">>"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, "\xA0", ' ', " " + (iterRoute + 1) + " / " + (routeLength - 1) + " -- Begin: " + new Date(this.perUserTime[current][0]).toLocaleString('de-DE').replace(/\./g, '/') + " -- End: " + new Date(this.perUserTime[current][this.perUserTime[current].length - 1]).toLocaleString('de-DE').replace(/\./g, '/')))), current !== 'None' && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
       className: "custom-btn",
       onClick: this.handleShowTotalRoute
     }, showTotalRoute ? 'Single' : 'Total', " Route")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
