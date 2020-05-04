@@ -166,7 +166,7 @@ module.exports = exports;
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(/*! ../../node_modules/css-loader/dist/runtime/api.js */ "../node_modules/css-loader/dist/runtime/api.js");
 exports = ___CSS_LOADER_API_IMPORT___(true);
 // Module
-exports.push([module.i, ".custom-btn {\n  padding: 0.6em 1.5em;\n  margin: 0 0.2em;\n  border-radius: 3px;\n  border: none;\n  font-weight: 400;\n  color: #ffffff;\n  background-color: #326666;\n  text-align: center; }\n\n.custom-btn:active {\n  background-color: #004040;\n  box-shadow: 0 2px #7f7f7f;\n  transform: translateY(1px); }\n\n.custom-menu-bar {\n  display: flex;\n  align-items: center;\n  margin-bottom: 5px;\n  justify-content: space-between; }\n", "",{"version":3,"sources":["main.css"],"names":[],"mappings":"AAAA;EACE,oBAAoB;EACpB,eAAe;EACf,kBAAkB;EAClB,YAAY;EACZ,gBAAgB;EAChB,cAAc;EACd,yBAAyB;EACzB,kBAAkB,EAAE;;AAEtB;EACE,yBAAyB;EACzB,yBAAyB;EACzB,0BAA0B,EAAE;;AAE9B;EACE,aAAa;EACb,mBAAmB;EACnB,kBAAkB;EAClB,8BAA8B,EAAE","file":"main.css","sourcesContent":[".custom-btn {\n  padding: 0.6em 1.5em;\n  margin: 0 0.2em;\n  border-radius: 3px;\n  border: none;\n  font-weight: 400;\n  color: #ffffff;\n  background-color: #326666;\n  text-align: center; }\n\n.custom-btn:active {\n  background-color: #004040;\n  box-shadow: 0 2px #7f7f7f;\n  transform: translateY(1px); }\n\n.custom-menu-bar {\n  display: flex;\n  align-items: center;\n  margin-bottom: 5px;\n  justify-content: space-between; }\n"]}]);
+exports.push([module.i, ".custom-btn {\n  padding: 0.6em 1.2em;\n  margin: 0 0.2em;\n  border-radius: 3px;\n  border: none;\n  font-weight: 400;\n  color: #ffffff;\n  background-color: #326666;\n  text-align: center; }\n\n.custom-btn:active {\n  background-color: #004040;\n  box-shadow: 0 2px #7f7f7f;\n  transform: translateY(1px); }\n\n.custom-menu-bar {\n  display: flex;\n  align-items: center;\n  margin-bottom: 5px;\n  justify-content: space-between; }\n", "",{"version":3,"sources":["main.css"],"names":[],"mappings":"AAAA;EACE,oBAAoB;EACpB,eAAe;EACf,kBAAkB;EAClB,YAAY;EACZ,gBAAgB;EAChB,cAAc;EACd,yBAAyB;EACzB,kBAAkB,EAAE;;AAEtB;EACE,yBAAyB;EACzB,yBAAyB;EACzB,0BAA0B,EAAE;;AAE9B;EACE,aAAa;EACb,mBAAmB;EACnB,kBAAkB;EAClB,8BAA8B,EAAE","file":"main.css","sourcesContent":[".custom-btn {\n  padding: 0.6em 1.2em;\n  margin: 0 0.2em;\n  border-radius: 3px;\n  border: none;\n  font-weight: 400;\n  color: #ffffff;\n  background-color: #326666;\n  text-align: center; }\n\n.custom-btn:active {\n  background-color: #004040;\n  box-shadow: 0 2px #7f7f7f;\n  transform: translateY(1px); }\n\n.custom-menu-bar {\n  display: flex;\n  align-items: center;\n  margin-bottom: 5px;\n  justify-content: space-between; }\n"]}]);
 // Exports
 module.exports = exports;
 
@@ -57611,7 +57611,7 @@ function (_super) {
       }
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       style: {
-        width: 500,
+        width: 370,
         marginBottom: 2
       }
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_search_box__WEBPACK_IMPORTED_MODULE_13__["default"], {
@@ -57634,7 +57634,7 @@ function (_super) {
       onChange: this.handleSelector,
       value: current,
       style: {
-        width: 500,
+        width: 370,
         paddingLeft: 15
       }
     }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("option", {
@@ -57648,14 +57648,14 @@ function (_super) {
       className: "custom-btn",
       onClick: this.handleIterRoute('previous'),
       disabled: showTotalRoute
-    }, "Prev"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    }, "<<"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
       className: "custom-btn",
       onClick: this.handleIterRoute('next'),
       disabled: showTotalRoute
-    }, "Next"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, "\xA0", ' ', " " + (iterRoute + 1) + " / " + (routeLength - 1) + " -- Begin: " + new Date(this.perUserTime[current][0]).toLocaleString() + " -- End: " + new Date(this.perUserTime[current][this.perUserTime[current].length - 1]).toLocaleString()))), current !== 'None' && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    }, ">>"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, "\xA0", ' ', " " + (iterRoute + 1) + " / " + (routeLength - 1) + " -- Begin: " + new Date(this.perUserTime[current][0]).toLocaleString().replace(/\./g, '/') + " -- End: " + new Date(this.perUserTime[current][this.perUserTime[current].length - 1]).toLocaleString().replace(/\./g, '/')))), current !== 'None' && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
       className: "custom-btn",
       onClick: this.handleShowTotalRoute
-    }, showTotalRoute ? 'Show Single' : 'Show Total', " Route")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    }, showTotalRoute ? 'Single' : 'Total', " Route")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       id: this.id,
       style: {
         width: width,

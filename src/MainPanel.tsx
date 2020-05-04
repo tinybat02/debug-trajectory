@@ -403,7 +403,7 @@ export class MainPanel extends PureComponent<Props> {
           height,
         }}
       >
-        <div style={{ width: 500, marginBottom: 2 }}>
+        <div style={{ width: 370, marginBottom: 2 }}>
           <ReactSearchBox
             placeholder="Search mac_address"
             data={options.map(mac => ({ key: mac, value: mac }))}
@@ -416,7 +416,7 @@ export class MainPanel extends PureComponent<Props> {
         </div>
         <div className="custom-menu-bar">
           <div>
-            <select id="selector" onChange={this.handleSelector} value={current} style={{ width: 500, paddingLeft: 15 }}>
+            <select id="selector" onChange={this.handleSelector} value={current} style={{ width: 370, paddingLeft: 15 }}>
               <option value="None">None</option>
               {options.map(item => (
                 <option key={item} value={item}>
@@ -427,23 +427,25 @@ export class MainPanel extends PureComponent<Props> {
             {current !== 'None' && (
               <>
                 <button className="custom-btn" onClick={this.handleIterRoute('previous')} disabled={showTotalRoute}>
-                  Prev
+                  &#60;&#60;
                 </button>
                 <button className="custom-btn" onClick={this.handleIterRoute('next')} disabled={showTotalRoute}>
-                  Next
+                  &#62;&#62;
                 </button>
                 <span>
                   &nbsp;{' '}
-                  {` ${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(this.perUserTime[current][0]).toLocaleString()} -- End: ${new Date(
-                    this.perUserTime[current][this.perUserTime[current].length - 1]
-                  ).toLocaleString()}`}
+                  {` ${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(this.perUserTime[current][0])
+                    .toLocaleString()
+                    .replace(/\./g, '/')} -- End: ${new Date(this.perUserTime[current][this.perUserTime[current].length - 1])
+                    .toLocaleString()
+                    .replace(/\./g, '/')}`}
                 </span>
               </>
             )}
           </div>
           {current !== 'None' && (
             <button className="custom-btn" onClick={this.handleShowTotalRoute}>
-              {showTotalRoute ? 'Show Single' : 'Show Total'} Route
+              {showTotalRoute ? 'Single' : 'Total'} Route
             </button>
           )}
         </div>
