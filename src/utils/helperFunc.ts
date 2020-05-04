@@ -65,7 +65,7 @@ export const createPoint = (routeData: Coordinate[], routeRadiusData: number[], 
   pointFeature.setStyle(
     new Style({
       image: new Circle({
-        radius: routeRadiusData[iterRoute] || 10,
+        radius: routeRadiusData[iterRoute] || 2,
         fill: new Fill({ color: 'rgba(73,168,222,0.6)' }),
       }),
     })
