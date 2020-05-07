@@ -57652,10 +57652,10 @@ function (_super) {
       className: "custom-btn",
       onClick: this.handleIterRoute('next'),
       disabled: showTotalRoute
-    }, ">>"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, "\xA0", ' ', " " + (iterRoute + 1) + " / " + (routeLength - 1) + " -- Begin: " + new Date(this.perUserTime[current][0]).toLocaleString('de-DE').replace(/\./g, '/') + " -- End: " + new Date(this.perUserTime[current][this.perUserTime[current].length - 1]).toLocaleString('de-DE').replace(/\./g, '/')))), current !== 'None' && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
+    }, ">>"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("button", {
       className: "custom-btn",
       onClick: this.handleShowTotalRoute
-    }, showTotalRoute ? 'Single' : 'Total', " Route")), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+    }, showTotalRoute ? 'Single' : 'Total', " Route"), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, "\xA0", ' ', " " + (iterRoute + 1) + " / " + (routeLength - 1) + " -- Begin: " + new Date(this.perUserTime[current][0]).toLocaleString('de-DE').replace(/\./g, '/') + " -- End: " + new Date(this.perUserTime[current][this.perUserTime[current].length - 1]).toLocaleString('de-DE').replace(/\./g, '/'))))), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       id: this.id,
       style: {
         width: width,

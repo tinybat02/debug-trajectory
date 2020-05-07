@@ -432,6 +432,9 @@ export class MainPanel extends PureComponent<Props> {
                 <button className="custom-btn" onClick={this.handleIterRoute('next')} disabled={showTotalRoute}>
                   &#62;&#62;
                 </button>
+                <button className="custom-btn" onClick={this.handleShowTotalRoute}>
+                  {showTotalRoute ? 'Single' : 'Total'} Route
+                </button>
                 <span>
                   &nbsp;{' '}
                   {` ${iterRoute + 1} / ${routeLength - 1} -- Begin: ${new Date(this.perUserTime[current][0])
@@ -443,11 +446,6 @@ export class MainPanel extends PureComponent<Props> {
               </>
             )}
           </div>
-          {current !== 'None' && (
-            <button className="custom-btn" onClick={this.handleShowTotalRoute}>
-              {showTotalRoute ? 'Single' : 'Total'} Route
-            </button>
-          )}
         </div>
         <div
           id={this.id}
