@@ -18,7 +18,7 @@
   "dependencies": {
     "@types/nanoid": "^2.1.0",
     "@types/ol": "^6.1.0",
-    "nanoid": "^2.1.11",
+    "nanoid": "^3.1.31",
     "ol": "^6.2.1",
     "react-search-box": "^2.0.2"
   }
